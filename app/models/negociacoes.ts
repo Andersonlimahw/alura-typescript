@@ -8,6 +8,7 @@ export class Negociacoes {
     }
 
     lista(): readonly Negociacao[] {
+        console.log('Negociacoes: ', this.negociacoes);
         return this.negociacoes;
     }
 }

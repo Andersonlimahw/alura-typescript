@@ -9,9 +9,9 @@ export class NegociacaoController {
     }
     adiciona() {
         const negociacao = this.criaNegociacao();
-        negociacao.data.setDate(12);
+        negociacao.data.setDate(12); // Teste de programacao defensiva
         this.negociacoes.adiciona(negociacao);
-        console.log(this.negociacoes.lista());
+        this.negociacoes.lista();
         this.limparFormulario();
     }
     criaNegociacao() {
