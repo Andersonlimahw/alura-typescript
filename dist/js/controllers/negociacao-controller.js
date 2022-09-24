@@ -33,6 +33,5 @@ export class NegociacaoController {
         this.inputQuantidade.value = '';
         this.inputValor.value = '';
         this.inputData.focus();
-        this.messageView.update('Adicione outra negociação.');
     }
 }
