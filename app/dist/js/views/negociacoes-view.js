@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { formatDate } from "../utils/masks/date.js";
 import { View } from "./view.js";
-import { logarTempoDeExecucao } from "../decorators/index.js";
+import { logarTempoDeExecucao, escape } from "../decorators/index.js";
 export class NegociacoesView extends View {
     constructor() {
         super(...arguments);
@@ -49,5 +49,6 @@ export class NegociacoesView extends View {
     }
 }
 __decorate([
+    escape,
     logarTempoDeExecucao()
 ], NegociacoesView.prototype, "template", null);
