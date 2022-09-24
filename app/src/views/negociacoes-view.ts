@@ -2,9 +2,11 @@ import { Negociacoes } from "../models/negociacoes.js";
 import { formatDate } from "../utils/masks/date.js";
 import { View } from "./view.js";
 import { Negociacao } from '../models/negociacao';
+import { logarTempoDeExecucao } from "../decorators/index.js";
 
 export class NegociacoesView extends View<Negociacoes> {
   
+  @logarTempoDeExecucao()
   protected template(model : Negociacoes): string {
     return `
       <table class="table table-hover table-bordered">
