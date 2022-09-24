@@ -1,7 +1,13 @@
 export class View {
     constructor(seletor, escapar) {
         this.escapar = false;
-        this.elemento = document.querySelector(seletor);
+        const elemento = document.querySelector(seletor);
+        if (elemento) {
+            this.elemento = elemento;
+        }
+        else {
+            throw Error(`Seletor ${seletor} não existe no DOM.`);
+        }
         if (escapar) {
             this.escapar = escapar;
         }
@@ -15,6 +21,6 @@ export class View {
         this.elemento.innerHTML = template;
     }
     delete() {
-        this.elemento.innerHTML = null;
+        this.elemento.innerHTML = '';
     }
 }
