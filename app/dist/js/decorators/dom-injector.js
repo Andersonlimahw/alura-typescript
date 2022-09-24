@@ -8,6 +8,17 @@ export function domInjector(selector) {
         `);
             return elemento;
         };
-        Object.defineProperty(target, propertyKey, { get: getter });
+        let _elemento;
+        const getterCached = function () {
+            if (!_elemento) {
+                _elemento = document.querySelector(selector);
+            }
+            console.log(`[Decorator][domInjector]: 
+            buscando selector: ${selector}, para
+            injectar em propertyKey: ${propertyKey}
+        `);
+            return _elemento;
+        };
+        Object.defineProperty(target, propertyKey, { get: getterCached });
     };
 }
