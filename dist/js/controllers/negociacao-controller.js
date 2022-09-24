@@ -33,5 +33,8 @@ export class NegociacaoController {
         this.inputQuantidade.value = '';
         this.inputValor.value = '';
         this.inputData.focus();
+        setTimeout(() => {
+            this.messageView.delete();
+        }, 1500);
     }
 }
