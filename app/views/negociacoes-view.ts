@@ -1,4 +1,5 @@
 import { Negociacoes } from "../models/negociacoes.js";
+import { formatDate } from "../utils/masks/date.js";
 
 export class NegociacoesView {
   private elemento : HTMLElement;
@@ -25,7 +26,7 @@ export class NegociacoesView {
             return `
             <tr>
               <td>
-                ${negociacao.data}
+                ${formatDate({ date:  negociacao.data })}
               </td>
               <td>
                 ${negociacao.quantidade}
