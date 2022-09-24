@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "npx lite-server --baseDir=dist",
+    "server": "npx lite-server --baseDir=app",
     "start": "concurrently \"npm run watch\" \"npm run server\"",
     "compile": "npx tsc",
     "watch": "npx tsc -w"
