@@ -2,6 +2,7 @@ import { Negociacao } from '../models/negociacao.js';
 import { Negociacoes } from '../models/negociacoes.js';
 import { MensagemView } from '../views/mensagem-view.js';
 import { NegociacoesView } from '../views/negociacoes-view.js';
+import { DiasDaSemana } from '../enums/dias-da-semana.js';
 
 export class NegociacaoController {
     private inputData: HTMLInputElement;
@@ -18,17 +19,20 @@ export class NegociacaoController {
         this.negociacoesView.update(this.negociacoes);
     }
 
-    adiciona(): void {
+    public adiciona(): void {
+        
         const negociacao = this.criaNegociacao();
-        negociacao.data.setDate(12); // Teste de programacao defensiva
+        if(!this.diaUtil(negociacao.data)) {
+          this.messageView.update('Apenas negociações em dias úteis, são aceitas.');
+          return;
+        }
         this.negociacoes.adiciona(negociacao);
         this.negociacoes.lista();
-        this.negociacoesView.update(this.negociacoes);
-        this.messageView.update('Negociação adicionada com sucesso.');
         this.limparFormulario();
+        this.atualizaView();
     }
 
-    criaNegociacao(): Negociacao {
+    private criaNegociacao(): Negociacao {
         const exp = /-/g;
         const date = new Date(this.inputData.value.replace(exp, ','));
         const quantidade = parseInt(this.inputQuantidade.value);
@@ -36,7 +40,7 @@ export class NegociacaoController {
         return new Negociacao(date, quantidade, valor);
     }
 
-    limparFormulario(): void {
+    private limparFormulario(): void {
         this.inputData.value = '';
         this.inputQuantidade.value = '';
         this.inputValor.value = '';
@@ -46,5 +50,14 @@ export class NegociacaoController {
         }, 1500)
        
     }
+
+    private atualizaView() : void {
+        this.negociacoesView.update(this.negociacoes);
+        this.messageView.update('Negociação adicionada com sucesso.');
+    }
     
+    private diaUtil(data : Date) : boolean {
+      return data.getDay() > DiasDaSemana.DOMINGO && 
+        data.getDay() < DiasDaSemana.SABADO;
+    }
 }
