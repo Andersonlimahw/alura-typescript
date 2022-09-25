@@ -9,4 +9,7 @@ export class Negociacoes {
         console.log('Negociacoes: ', this.negociacoes);
         return this.negociacoes;
     }
+    paraTexto() {
+        return `${this.negociacoes.map(x => x.paraTexto())}`;
+    }
 }
