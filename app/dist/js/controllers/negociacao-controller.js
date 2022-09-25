@@ -4,15 +4,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { Negociacao } from '../models/negociacao.js';
 import { Negociacoes } from '../models/negociacoes.js';
 import { MensagemView } from '../views/mensagem-view.js';
@@ -21,12 +12,13 @@ import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { logarTempoDeExecucao } from '../decorators/logar-tempo-de-execucao.js';
 import { inspecionar } from '../decorators/inpecionar.js';
 import { domInjector } from '../decorators/dom-injector.js';
-import { GetData } from '../services/dados-service.js';
+import { NegociacoesService } from '../services/negociacoes-service.js';
 export class NegociacaoController {
     constructor() {
         this.negociacoes = new Negociacoes();
         this.negociacoesView = new NegociacoesView('#negociacoes_view');
         this.messageView = new MensagemView('#mensagem_view');
+        this.negociacoesService = new NegociacoesService();
         this.negociacoesView.update(this.negociacoes);
     }
     adiciona() {
@@ -41,14 +33,13 @@ export class NegociacaoController {
         this.atualizaView();
     }
     importarDados() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield GetData()
-                .then(negociacoesDeHoje => {
-                for (let negociacao of negociacoesDeHoje) {
-                    this.negociacoes.adiciona(negociacao);
-                }
-                this.negociacoesView.update(this.negociacoes);
-            });
+        this.negociacoesService.
+            obterNegociacoesDoDia()
+            .then(negociacoesDeHoje => {
+            for (let negociacao of negociacoesDeHoje) {
+                this.negociacoes.adiciona(negociacao);
+            }
+            this.negociacoesView.update(this.negociacoes);
         });
     }
     limparFormulario() {

@@ -6,7 +6,7 @@ import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { logarTempoDeExecucao } from '../decorators/logar-tempo-de-execucao.js';
 import { inspecionar } from '../decorators/inpecionar.js';
 import { domInjector } from '../decorators/dom-injector.js';
-import { GetData } from '../services/dados-service.js';
+import { NegociacoesService } from '../services/negociacoes-service.js';
 
 
 export class NegociacaoController {
@@ -19,6 +19,7 @@ export class NegociacaoController {
     private negociacoes = new Negociacoes();
     private negociacoesView = new NegociacoesView('#negociacoes_view');
     private messageView = new MensagemView('#mensagem_view');
+    private negociacoesService = new NegociacoesService();
 
     constructor() {
         this.negociacoesView.update(this.negociacoes);
@@ -42,8 +43,9 @@ export class NegociacaoController {
         this.atualizaView();
     }
 
-    public async importarDados(): Promise<any> {
-        await GetData()
+    public importarDados(): void {
+        this.negociacoesService.
+        obterNegociacoesDoDia()
         .then(negociacoesDeHoje => {
             for(let negociacao of negociacoesDeHoje){
                 this.negociacoes.adiciona(negociacao);

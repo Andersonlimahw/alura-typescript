@@ -1,1 +1,1 @@
-export * from './dados-service.js';
+export * from './negociacoes-service.js';
