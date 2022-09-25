@@ -26,4 +26,9 @@ export class Negociacao extends ImprimivelClass {
         const valor = parseFloat(valorString);
         return new Negociacao(date, quantidade, valor);
     }
+    comparar(negocicao) {
+        return this.data.getDate() === negocicao.data.getDate() &&
+            this.data.getMonth() === negocicao.data.getMonth() &&
+            this.data.getFullYear() === negocicao.data.getFullYear();
+    }
 }

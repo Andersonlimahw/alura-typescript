@@ -23,7 +23,7 @@ export class NegociacaoController {
         this.negociacoesView.update(this.negociacoes);
     }
     adiciona() {
-        const negociacao = Negociacao.cria(this.inputData.value, this.inputData.value, this.inputValor.value);
+        const negociacao = Negociacao.cria(this.inputData.value, this.inputQuantidade.value, this.inputValor.value);
         if (!this.diaUtil(negociacao.data)) {
             this.messageView.update('Apenas negociações em dias úteis, são aceitas.');
             return;
@@ -37,6 +37,14 @@ export class NegociacaoController {
     importarDados() {
         this.negociacoesService.
             obterNegociacoesDoDia()
+            .then((negociacoesDeHoje) => {
+            return negociacoesDeHoje.filter(negociacaoDeHoje => {
+                return !this.negociacoes
+                    .lista()
+                    .some(negociacao => negociacao
+                    .comparar(negociacaoDeHoje));
+            });
+        })
             .then(negociacoesDeHoje => {
             for (let negociacao of negociacoesDeHoje) {
                 this.negociacoes.adiciona(negociacao);

@@ -1,6 +1,7 @@
+import { Comparevel } from "../interfaces/comparavel.js";
 import { ImprimivelClass } from "../utils/logs/imprimivelClass.js";
 
-export class Negociacao extends ImprimivelClass {
+export class Negociacao  extends ImprimivelClass implements Comparevel<Negociacao> {
     constructor(
         private _data: Date, 
         public readonly quantidade: number, 
@@ -37,5 +38,11 @@ export class Negociacao extends ImprimivelClass {
         const quantidade = parseInt(quantidadeString);
         const valor = parseFloat(valorString);
         return new Negociacao(date, quantidade, valor);
+    }
+
+    public comparar(negocicao: Negociacao) : boolean {
+        return this.data.getDate() === negocicao.data.getDate() &&
+        this.data.getMonth() === negocicao.data.getMonth() &&
+        this.data.getFullYear() === negocicao.data.getFullYear()
     }
 }

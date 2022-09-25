@@ -10,6 +10,9 @@ export class Negociacoes {
         return this.negociacoes;
     }
     paraTexto() {
-        return `${this.negociacoes.map(x => x.paraTexto())}`;
+        return JSON.stringify(this.negociacoes, null, 2);
+    }
+    comparar(negociacoes) {
+        return JSON.stringify(this.negociacoes) === JSON.stringify(negociacoes);
     }
 }

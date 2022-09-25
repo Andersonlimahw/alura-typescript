@@ -1,7 +1,10 @@
+import { Comparevel as Comparavel } from '../interfaces/comparavel.js';
 import { Imprimivel } from '../utils/logs/imprimivel.js';
 import { Negociacao } from './negociacao.js';
 
-export class Negociacoes implements Imprimivel {
+export class Negociacoes implements Imprimivel, Comparavel<Negociacoes> {
+    
+
     private negociacoes: Negociacao[] = [];
 
     public adiciona(negociacao: Negociacao) {
@@ -14,6 +17,10 @@ export class Negociacoes implements Imprimivel {
     }
 
     public paraTexto(): string {
-        return `${this.negociacoes.map(x => x.paraTexto())}`;
+        return JSON.stringify(this.negociacoes, null, 2);
+    }
+
+    public comparar(negociacoes :  Negociacoes): boolean {
+        return JSON.stringify(this.negociacoes) === JSON.stringify(negociacoes);
     }
 }

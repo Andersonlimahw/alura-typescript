@@ -31,7 +31,7 @@ export class NegociacaoController {
         
         const negociacao = Negociacao.cria(
             this.inputData.value,
-            this.inputData.value, 
+            this.inputQuantidade.value, 
             this.inputValor.value
         )
         if(!this.diaUtil(negociacao.data)) {
@@ -48,6 +48,15 @@ export class NegociacaoController {
     public importarDados(): void {
         this.negociacoesService.
         obterNegociacoesDoDia()
+        .then((negociacoesDeHoje) => {
+            return negociacoesDeHoje.filter(negociacaoDeHoje => {
+                return !this.negociacoes
+                    .lista()
+                    .some(negociacao => negociacao
+                        .comparar(negociacaoDeHoje)
+                    )
+            })
+        })
         .then(negociacoesDeHoje => {
             for(let negociacao of negociacoesDeHoje){
                 this.negociacoes.adiciona(negociacao);
