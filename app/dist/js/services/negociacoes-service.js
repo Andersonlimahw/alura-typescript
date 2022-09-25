@@ -8,16 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Negociacao } from '../models/negociacao.js';
-import { BASE_URL } from '../utils/requests/api-config.js';
-import { httpClient } from '../utils/requests/httpClient.js';
-export class NegociacoesService {
+import BaseService from './base-service.js';
+export class NegociacoesService extends BaseService {
     obterNegociacoesDoDia() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield httpClient({
-                url: `${BASE_URL}/dados`,
-                options: {
-                    method: 'GET'
-                }
+            return yield this.GetAsync({
+                endpoint: 'dados',
             }).then((data) => data.map(dados => {
                 return new Negociacao(new Date(), dados.vezes, dados.montante);
             }));

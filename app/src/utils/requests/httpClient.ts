@@ -4,7 +4,7 @@ interface RequestInput {
     options: any;
 }
 export const httpClient = async ({
-    url, 
+    url,
     options,
 } : RequestInput) => {
     return await fetch(url, {...options})
