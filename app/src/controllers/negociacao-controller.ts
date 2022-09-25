@@ -6,6 +6,8 @@ import { DiasDaSemana } from '../enums/dias-da-semana.js';
 import { logarTempoDeExecucao } from '../decorators/logar-tempo-de-execucao.js';
 import { inspecionar } from '../decorators/inpecionar.js';
 import { domInjector } from '../decorators/dom-injector.js';
+import { GetData } from '../services/dados-service.js';
+
 
 export class NegociacaoController {
     @domInjector('#data')
@@ -38,6 +40,17 @@ export class NegociacaoController {
         this.negociacoes.lista();
         this.limparFormulario();
         this.atualizaView();
+    }
+
+    public async importarDados(): Promise<any> {
+        await GetData()
+        .then(negociacoesDeHoje => {
+            for(let negociacao of negociacoesDeHoje){
+                this.negociacoes.adiciona(negociacao);
+            }
+            this.negociacoesView.update(this.negociacoes);
+        });
+
     }
 
     
