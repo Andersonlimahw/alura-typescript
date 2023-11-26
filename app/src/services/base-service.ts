@@ -1,4 +1,3 @@
-// TODO create base service
 
 import { IGetInput, IPostInput, IPutInput } from "../interfaces/ibase-service.js";
 import { httpClient } from '../utils/requests/httpClient.js';
